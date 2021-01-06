@@ -15,9 +15,12 @@ files:
         }
     }
   learner_created: false
+- name: src/META-INF/MANIFEST.MF
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/2707#comment
 status: Solved
 feedback:
   message: <html>Correct solution</html>
-  time: Wed, 06 Jan 2021 15:00:12 UTC
+  time: Wed, 06 Jan 2021 16:35:59 UTC
 record: -1
