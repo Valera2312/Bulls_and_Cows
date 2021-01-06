@@ -1,0 +1,5 @@
+# Project exclude paths
+/.gradle/
+/Bulls and Cows/task/build/
+/Problems/Initializing an array of characters/out/
+/Problems/Initializing an array of characters/out/production/classes/
