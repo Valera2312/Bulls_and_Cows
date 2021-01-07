@@ -177,6 +177,9 @@ files:
         }
     }
   learner_created: false
+- name: src/META-INF/MANIFEST.MF
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/53/stages/288/implement#comment
 status: Unchecked
 record: -1
