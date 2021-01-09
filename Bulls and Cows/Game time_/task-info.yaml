@@ -244,6 +244,16 @@ files:
         }
     }
   learner_created: false
+- name: src/META-INF/MANIFEST.MF
+  visible: true
+  text: |+
+    Manifest-Version: 1.0
+    Main-Class: bullscows.Main
+
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/53/stages/290/implement#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Sat, 09 Jan 2021 14:20:20 UTC
 record: -1
