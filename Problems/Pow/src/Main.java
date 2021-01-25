@@ -6,7 +6,7 @@ class Main {
         Scanner scanner = new Scanner(System.in);
         double a = scanner.nextDouble();
         double b = scanner.nextDouble();
-        double p = Math.pow(a,b);
+        double p = Math.pow(a, b);
         System.out.println(p);
     }
 }

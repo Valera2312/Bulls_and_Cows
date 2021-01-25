@@ -1,13 +1,9 @@
 package bullscows;
-
-import java.util.Arrays;
-import java.util.LinkedHashSet;
 import java.util.Scanner;
-import java.util.Set;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please, enter the secret code's length:");
 
@@ -19,50 +15,60 @@ public class Main {
                     "enough unique digits.");
             return;
         }
-
         System.out.println("Okay, let's start a game!");
-        String Secret = GetRandom(length);
+        String Secret = String.valueOf(GetRandom(length));
+        //System.out.println(Secret);
         int i = 1;
         while(true)
         {
             String m = NumberOfCowsAndBulls(Secret);
             System.out.println("Turn :" + i);
-
-            if (!m.equals("Grade: " + length + " bulls.")) {
-                System.out.println(m);
-                i++;
-            } else {
+            if (m.equals("Grade: " + length + " bulls.")||m.equals("Grade: "+length+ " bull.")) {
                 System.out.println(m);
                 System.out.println("Congratulations! You guessed the secret code.");
                 break;
+            } else {
+                System.out.println(m);
+                i++;
             }
         }
     }
-
-    public static String NumberOfCowsAndBulls(String SecretCode){
+    public static String NumberOfCowsAndBulls(String SecretCode) {
         Scanner scanner = new Scanner(System.in);
         String Try = scanner.nextLine();
         char[] charsFromTry = Try.toCharArray();
         char[] charsFromSecretCode = SecretCode.toCharArray();
         int bulls = 0;
         int cows = 0;
-        for(int i = 0; i < charsFromTry.length; i++){
 
-            if(charsFromTry[i]==charsFromSecretCode[i]){
-                bulls++;
+        if(SecretCode.length()==1){
+
+            if(charsFromTry[0] == charsFromSecretCode[0]){
+                bulls = 1;
+
             }
-            if(SecretCode.contains(String.valueOf(charsFromTry[i]))){
-                cows++;
+
+        }else {
+            for (int i = 0;i < charsFromTry.length;i++) {
+
+                if (charsFromTry[i] == charsFromSecretCode[i]) {
+                    bulls++;
+                    cows--;
+
+                }
+                if(SecretCode.contains(String.valueOf(charsFromTry[i]))){
+                    cows++;
+
+                }
+
             }
         }
-        cows = cows - bulls;
-
         if(bulls==0){
             return (cows > 1) ? "Grade: "+cows+" cows" : "Grade: "+cows+ " cow.";
         }else if(cows==0){
             return  (bulls > 1) ? "Grade: "+bulls+" bulls." : "Grade: "+bulls+ " bull.";
         }else{
-            if(bulls > 1 && cows >1){
+            if(bulls >= 1 && cows >1){
                 return "Grade: "+bulls+" bulls and " + cows + " cows";
             }else if(bulls > 1 && cows == 1){
                 return "Grade: "+bulls+" bulls and " + cows + " cow";
@@ -72,24 +78,12 @@ public class Main {
 
         }
     }
-    public static String GetRandom(int length){
-        Scanner scanner = new Scanner(System.in);
-        long pseudoRandomNumber = System.nanoTime()*2;
-        StringBuilder s =  new StringBuilder();
-        boolean repeatedChar = false;
+    public static int GetRandom(int length){
+        Random random = new Random();
 
-        String random = new String(String.valueOf(pseudoRandomNumber));
-
-        Set<Character> linkedHashSet = new LinkedHashSet<>();
-
-        for (int i = 0; i < random.length(); i++) {
-            linkedHashSet.add(random.charAt(i));
-        }
-
-        for (Character c : linkedHashSet) {
-            s.append(c);
-        }
-        return s.substring(0,length);
+        int upper = (int) Math.pow(10,length);
+        int lower = upper/10;
+        return random.nextInt(upper - lower) + lower;
 
     }
 

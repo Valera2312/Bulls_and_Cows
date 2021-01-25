@@ -7,7 +7,7 @@ class Main {
         double b = scanner.nextDouble();
         double c = scanner.nextDouble();
         double p = (a + b + c) / 2;
-        double s = Math.sqrt(p* (p - a) * (p - b) * (p - c));
+        double s = Math.sqrt(p * (p - a) * (p - b) * (p - c));
         System.out.println(s);
     }
 }
