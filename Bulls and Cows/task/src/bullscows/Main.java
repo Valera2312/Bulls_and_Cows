@@ -1,90 +1,100 @@
 package bullscows;
 import java.util.Scanner;
-import java.util.Random;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please, enter the secret code's length:");
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Input the length of the secret code:");
+        String sizeString = scan.nextLine();
+        if(!sizeString.matches("[-+]?\\d+")){
 
-        int length = scanner.nextInt();
-        if(length>=9){
-            System.out.println("Error: can't generate a secret number with " +
-                    "a length of 11 because " +
-                    "there aren't " +
-                    "enough unique digits.");
+            System.out.println("Error: " + sizeString + " isn't a valid number.");
             return;
         }
-        System.out.println("Okay, let's start a game!");
-        String Secret = String.valueOf(GetRandom(length));
-        //System.out.println(Secret);
-        int i = 1;
-        while(true)
-        {
-            String m = NumberOfCowsAndBulls(Secret);
-            System.out.println("Turn :" + i);
-            if (m.equals("Grade: " + length + " bulls.")||m.equals("Grade: "+length+ " bull.")) {
-                System.out.println(m);
-                System.out.println("Congratulations! You guessed the secret code.");
-                break;
-            } else {
-                System.out.println(m);
-                i++;
+
+        System.out.println("Input the number of possible symbols in the code:");
+        int charSize = scan.nextInt();
+
+
+            int size = Integer.parseInt(sizeString);
+            if(size > charSize||size == 0 || charSize == 0){
+
+                System.out.println("Error: it's not possible to generate a code with a length of "+ size +" with "+ charSize + " unique symbols.");
+                return;
             }
-        }
+            else if(charSize>36){
+                System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
+                return;
+
+            }
+            char[] randomCode = generateRandomNum(size, charSize);
+            System.out.println("Okay, let's start a game!");
+            int count = 1;
+            boolean isRight;
+            do {
+                System.out.println("Turn " + count + ":");
+                count++;
+                isRight = grade(randomCode);
+            } while (!isRight);
+            System.out.println("Congratulations! You guessed the secret code.");
+
+
+
+
+
     }
-    public static String NumberOfCowsAndBulls(String SecretCode) {
-        Scanner scanner = new Scanner(System.in);
-        String Try = scanner.nextLine();
-        char[] charsFromTry = Try.toCharArray();
-        char[] charsFromSecretCode = SecretCode.toCharArray();
-        int bulls = 0;
-        int cows = 0;
 
-        if(SecretCode.length()==1){
+    public static char[] generateRandomNum(int size, int charSize) {
+        char[] randomCode = new char[size];
+        String charList = "0123456789abcdefghijklmnopqrstuvwxyz";
+        List<Character> currentCharList = new ArrayList<>();
+        for (int k = 0; k < charSize; k++) {
+            currentCharList.add(charList.charAt(k));
+        }
+        Collections.shuffle(currentCharList);
+        for (int j = 0; j < size; j++) {
+            randomCode[j] = currentCharList.get(j);
+        }
+        StringBuilder prepearingMessage = new StringBuilder();
+        prepearingMessage.append("The secret is prepared: ");
+        prepearingMessage.append("*".repeat(Math.max(0, size)));
+        if(charSize <= 10) {
+            prepearingMessage.append(" (0-").append(charSize - 1).append(").");
+        } else if (charSize == 11){
+            prepearingMessage.append(" (0-9, a).");
+        } else {
+            prepearingMessage.append(" (0-9, a-").append(charList.charAt(charSize - 1)).append(").");
+        }
+        System.out.println(prepearingMessage);
+        return randomCode;
+    }
 
-            if(charsFromTry[0] == charsFromSecretCode[0]){
-                bulls = 1;
-
+    public static boolean grade(char[] rightNum) {
+        Scanner scan = new Scanner(System.in);
+        char[] attempt = scan.nextLine().toCharArray();
+        int cowCount = 0;
+        int bullCount = 0;
+        for (int i = 0; i < rightNum.length; i++) {
+            if (attempt[i] == rightNum[i]) {
+                bullCount++;
+                continue;
             }
-
-        }else {
-            for (int i = 0;i < charsFromTry.length;i++) {
-
-                if (charsFromTry[i] == charsFromSecretCode[i]) {
-                    bulls++;
-                    cows--;
-
+            for (int j = 0; j < rightNum.length; j++) {
+                if (attempt[i] == rightNum[j]) {
+                    cowCount++;
                 }
-                if(SecretCode.contains(String.valueOf(charsFromTry[i]))){
-                    cows++;
-
-                }
-
             }
         }
-        if(bulls==0){
-            return (cows > 1) ? "Grade: "+cows+" cows" : "Grade: "+cows+ " cow.";
-        }else if(cows==0){
-            return  (bulls > 1) ? "Grade: "+bulls+" bulls." : "Grade: "+bulls+ " bull.";
-        }else{
-            if(bulls >= 1 && cows >1){
-                return "Grade: "+bulls+" bulls and " + cows + " cows";
-            }else if(bulls > 1 && cows == 1){
-                return "Grade: "+bulls+" bulls and " + cows + " cow";
-            }else{
-                return "Grade: "+bulls+" bull and " + cows + " cow";
-            }
-
+        if (bullCount + cowCount == 0) {
+            System.out.println("Grade: None");
+        } else if (bullCount != 0 && cowCount != 0) {
+            System.out.println("Grade: " + bullCount + " bull(s) and " + cowCount + " cow(s)");
+        } else if (bullCount != 0 && cowCount == 0) {
+            System.out.println("Grade: " + bullCount + " bull(s)");
+        } else {
+            System.out.println("Grade: " + cowCount + " cow(s)");
         }
+        return bullCount == rightNum.length;
     }
-    public static int GetRandom(int length){
-        Random random = new Random();
-
-        int upper = (int) Math.pow(10,length);
-        int lower = upper/10;
-        return random.nextInt(upper - lower) + lower;
-
-    }
-
 }

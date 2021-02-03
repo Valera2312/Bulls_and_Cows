@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/209958/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Mon, 25 Jan 2021 11:15:53 UTC
+update_date: Wed, 03 Feb 2021 12:00:51 UTC
 stages:
 - id: 287
   step: 5429
@@ -22,10 +22,10 @@ stages:
   is_completed: true
 - id: 292
   step: 5434
-  is_completed: false
+  is_completed: true
 - id: 293
   step: 5435
-  is_completed: false
+  is_completed: true
 topics:
   0:
   - title: Units of information
@@ -40,10 +40,6 @@ topics:
     theory_id: 3749
   - title: Types and variables
     theory_id: 3518
-  - title: Sizes and ranges
-    theory_id: 3532
-  - title: Type casting
-    theory_id: 3510
   - title: Comments
     theory_id: 3520
   - title: Naming variables
@@ -58,6 +54,10 @@ topics:
     theory_id: 5008
   - title: Characters
     theory_id: 3514
+  - title: Sizes and ranges
+    theory_id: 3532
+  - title: Type casting
+    theory_id: 3510
   1:
   - title: Boolean and logical operations
     theory_id: 3516
@@ -84,10 +84,10 @@ topics:
   - title: Processing strings
     theory_id: 3551
   2:
-  - title: Introduction to OOP
-    theory_id: 3614
   - title: Write, compile, and run
     theory_id: 3739
+  - title: Introduction to OOP
+    theory_id: 3614
   - title: Switch statement
     theory_id: 3504
   - title: Declaring a method
